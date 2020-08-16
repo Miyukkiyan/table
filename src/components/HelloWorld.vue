@@ -28,6 +28,8 @@ export default {
   data () {
     return {
       tableConfig: {
+        // 是否显示分页
+        isShowPagination: true,
         // 是否显示多选框
         isShowSelect: false,
         // 是否记忆分页

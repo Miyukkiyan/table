@@ -34,6 +34,18 @@
       </template>
 
     </el-table>
+    <!-- pagination -->
+    <el-pagination
+      v-if="tableConfigData.isShowPagination"
+      :style="{'margin-top':'20px'}"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page="currentPage"
+      :page-sizes="[10, 200, 300, 400]"
+      :page-size="pageSize"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="total">
+    </el-pagination>
   </div>
 </template>
 <script>
@@ -49,6 +61,7 @@ export default {
   },
   data () {
     return {
+      // table
       tableData: [{
         date: '2016-05-02',
         name: '王小虎',
@@ -67,6 +80,7 @@ export default {
         address: '上海市普陀区金沙江路 1516 弄'
       }],
       tableConfigData: {
+        isShowPagination: false,
         isShowSelect: false,
         tHead: [],
         isRememberPagination: false,
@@ -74,8 +88,11 @@ export default {
           url: '',
           method: ''
         }
-      }
-
+      },
+      // pagination
+      total: 0,
+      currentPage: 1,
+      pageSize: 10
     }
   },
   created () {
@@ -109,6 +126,16 @@ export default {
           this.tableData = responseData
         }
       }).catch()
+    },
+
+    handleSizeChange (val) {
+      this.pageSize = val
+      this.getTableData()
+    },
+    handleCurrentChange (val) {
+      this.currentPage = val
+      this.pageSize = 1
+      this.getTableData()
     }
   }
 }
